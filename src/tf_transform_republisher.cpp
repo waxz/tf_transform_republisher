@@ -61,8 +61,11 @@ TFTransformRepublisher::TFTransformRepublisher() : nh_("~")
                 ros::Duration(1.0).sleep();
             }
         }
+        if (input_tf_transform_parent_frame_id != output_tf_transform_parent_frame_id){
+            tb_.sendTransform(tf::StampedTransform(identity_transform_, ros::Time::now(), input_tf_transform_parent_frame_id, output_tf_transform_parent_frame_id));
+        }
 
-        tb_.sendTransform(tf::StampedTransform(identity_transform_, ros::Time::now(), input_tf_transform_parent_frame_id, output_tf_transform_parent_frame_id));
+
         tb_.sendTransform(tf::StampedTransform(transform_, ros::Time::now(), output_tf_transform_parent_frame_id, output_tf_transform_child_frame_id));
     
         rate.sleep();
